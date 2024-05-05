@@ -1,6 +1,6 @@
 import express from 'express'
 import dbConection from './utils/dbConnection.js'
-import { registerUser, userLogin } from './controller/user.js'
+import { logout, registerUser, userLogin } from './controller/user.js'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -11,15 +11,18 @@ dbConection().then((v)=>{
 }).catch((err)=>{
 console.log("failed to connects",err)
 })
-app.use(cors())
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());   
 app.use(cookieParser())
+
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.get('/',(req,res)=>{
     res.send("Hello World")
 })
 app.post('/register',registerUser)
 app.post('/login',userLogin)
+app.get('/logout',logout)
 app.listen(port,()=>{
     console.log(`listen at port ${port}`)
 })
