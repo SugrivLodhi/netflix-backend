@@ -1,7 +1,6 @@
 import express from 'express'
 import dbConection from './utils/dbConnection.js'
 import { logout, registerUser, userLogin } from './controller/user.js'
-import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 const app = express()
@@ -16,7 +15,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());   
 app.use(cookieParser())
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({ credentials: true, origin: true }));
+
 app.get('/',(req,res)=>{
     res.send("Hello World")
 })
